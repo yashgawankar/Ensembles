@@ -14,6 +14,7 @@ Design choices:
 """
 
 from __future__ import annotations
+import _path_setup
 
 from typing import Optional
 

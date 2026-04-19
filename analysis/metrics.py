@@ -6,6 +6,7 @@ TableBuilder:     Assembles theory validation and hypothesis verdict tables as D
 """
 
 from __future__ import annotations
+import _path_setup
 
 from typing import Dict, List, Optional, Tuple
 

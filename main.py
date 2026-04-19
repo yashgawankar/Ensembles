@@ -44,6 +44,9 @@ import warnings
 from datetime import datetime
 from typing import Dict, List, Optional
 
+# Ensure the project root is on sys.path regardless of where python is invoked from.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
 warnings.filterwarnings("ignore")
 
 import numpy as np

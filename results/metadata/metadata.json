@@ -1,0 +1,20 @@
+{
+  "dataset": {
+    "type": "synthetic",
+    "n_samples": 10000,
+    "n_features": 15,
+    "n_informative": 8,
+    "n_noise_features": 7,
+    "noise_level": 15.0,
+    "target": "linear + 3\u00b7sin(2x\u2081) + 2x\u2082\u00b2 + 1.5x\u2083x\u2084 + \u03b5"
+  },
+  "timestamp": "2026-04-18T20:39:44.933463",
+  "n_bootstrap": 50,
+  "experiments": [
+    "ensemble_size",
+    "depth",
+    "noise",
+    "train_size"
+  ],
+  "quick_mode": false
+}

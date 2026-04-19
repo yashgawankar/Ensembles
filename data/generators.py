@@ -11,6 +11,7 @@ in DataPreprocessor, not here, so generators stay pure.
 """
 
 from __future__ import annotations
+import _path_setup
 
 import os
 from abc import ABC, abstractmethod

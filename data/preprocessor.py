@@ -10,6 +10,7 @@ Responsibilities:
 """
 
 from __future__ import annotations
+import _path_setup
 
 import os
 import pickle

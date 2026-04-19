@@ -6,6 +6,7 @@ ModelBuilder is a pure factory – it returns *unfitted* estimators.
 """
 
 from __future__ import annotations
+import _path_setup
 
 import copy
 from typing import Any, Dict, List, Optional, Tuple

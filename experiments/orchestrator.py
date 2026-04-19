@@ -15,6 +15,7 @@ Key responsibilities:
 """
 
 from __future__ import annotations
+import _path_setup
 
 import time
 from typing import List, Optional

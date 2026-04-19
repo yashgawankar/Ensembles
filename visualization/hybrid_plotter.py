@@ -9,6 +9,7 @@ Plot 6: MSE vs λ for both hybrid types, with theoretical and empirical λ*
 """
 
 from __future__ import annotations
+import _path_setup
 
 from typing import Dict, List, Optional, Tuple
 
