@@ -15,11 +15,11 @@ Design choices:
 
 from __future__ import annotations
 
-import time
 from typing import Optional
 
 import numpy as np
 from sklearn.base import BaseEstimator, clone
+from tqdm import tqdm
 
 from pipeline_types import BiasVarianceResult
 
@@ -79,8 +79,14 @@ class BootstrapEvaluator:
         n_test = len(y_test)
         all_predictions = np.zeros((self.n_bootstrap, n_test))
 
-        t0 = time.time()
-        for i in range(self.n_bootstrap):
+        bar = tqdm(
+            range(self.n_bootstrap),
+            desc=f"  bootstrap [{label}]",
+            unit="run",
+            leave=False,
+            dynamic_ncols=True,
+        )
+        for i in bar:
             seed_i = self.random_seed + i
             X_boot, y_boot = self._bootstrap_sample(X_train, y_train, seed_i)
 
@@ -88,11 +94,6 @@ class BootstrapEvaluator:
             m = clone(model)
             m.fit(X_boot, y_boot)
             all_predictions[i, :] = m.predict(X_test)
-
-            if self.verbose and (i + 1) % 10 == 0:
-                elapsed = time.time() - t0
-                print(f"    [{label}] Bootstrap {i+1}/{self.n_bootstrap}  "
-                      f"({elapsed:.1f}s elapsed)")
 
         return self._compute_result(all_predictions, y_test)
 
@@ -122,8 +123,14 @@ class BootstrapEvaluator:
         rf_predictions  = np.zeros((self.n_bootstrap, n_test))
         xgb_predictions = np.zeros((self.n_bootstrap, n_test))
 
-        t0 = time.time()
-        for i in range(self.n_bootstrap):
+        bar = tqdm(
+            range(self.n_bootstrap),
+            desc=f"  bootstrap paired [{label}]",
+            unit="run",
+            leave=False,
+            dynamic_ncols=True,
+        )
+        for i in bar:
             seed_i = self.random_seed + i
             X_boot, y_boot = self._bootstrap_sample(X_train, y_train, seed_i)
 
@@ -135,11 +142,6 @@ class BootstrapEvaluator:
 
             rf_predictions[i, :]  = m_rf.predict(X_test)
             xgb_predictions[i, :] = m_xgb.predict(X_test)
-
-            if self.verbose and (i + 1) % 10 == 0:
-                elapsed = time.time() - t0
-                print(f"    [{label}] Paired bootstrap {i+1}/{self.n_bootstrap}  "
-                      f"({elapsed:.1f}s elapsed)")
 
         bv_rf  = self._compute_result(rf_predictions, y_test)
         bv_xgb = self._compute_result(xgb_predictions, y_test)

@@ -19,6 +19,8 @@ from __future__ import annotations
 import time
 from typing import List, Optional
 
+from tqdm import tqdm
+
 from data.preprocessor import DatasetVariantManager
 from experiments.bootstrap_evaluator import BootstrapEvaluator
 from models.model_builder import HyperparameterRegistry, ModelBuilder
@@ -92,22 +94,25 @@ class ExperimentOrchestrator:
             config_results=[],
         )
 
-        total = len(all_configs)
-        for idx, (model_type, param_name, param_value, config) in enumerate(all_configs, 1):
+        outer_bar = tqdm(
+            all_configs,
+            desc=f"[{label}]",
+            unit="config",
+            dynamic_ncols=True,
+        )
+
+        for model_type, param_name, param_value, config in outer_bar:
             run_label = f"{model_type} | {param_name}={param_value}"
+            outer_bar.set_postfix_str(run_label)
 
             # ── Resumability: skip if already computed ─────────────────────
             existing = self.results_store.get_config_result(
                 model_type, variation_name, param_value
             )
             if existing is not None:
-                if self.verbose:
-                    print(f"  [{idx}/{total}] SKIP (cached): {run_label}")
+                tqdm.write(f"  ↩  SKIP (cached): {run_label}")
                 experiment.config_results.append(existing)
                 continue
-
-            if self.verbose:
-                print(f"  [{idx}/{total}] Running: {run_label}")
 
             # ── Select correct dataset variant ─────────────────────────────
             variant_key = self._resolve_variant_key(variation_name, param_name, param_value)
@@ -122,13 +127,13 @@ class ExperimentOrchestrator:
             )
             elapsed = time.time() - t0
 
-            if self.verbose:
-                print(
-                    f"         bias²={bv_result.bias_squared:.4f}  "
-                    f"var={bv_result.variance:.4f}  "
-                    f"mse={bv_result.mse:.4f}  "
-                    f"({elapsed:.1f}s)"
-                )
+            tqdm.write(
+                f"  ✓  {run_label:<45} "
+                f"bias²={bv_result.bias_squared:>10.4f}  "
+                f"var={bv_result.variance:>10.4f}  "
+                f"mse={bv_result.mse:>10.4f}  "
+                f"({elapsed:.1f}s)"
+            )
 
             # ── Wrap and store ─────────────────────────────────────────────
             config_result = ConfigResult(
@@ -149,8 +154,7 @@ class ExperimentOrchestrator:
         # Persist full experiment summary
         self.results_store.save_experiment_result(experiment)
 
-        if self.verbose:
-            print(f"\n  ✓ {label} complete. {len(experiment.config_results)} configs evaluated.\n")
+        tqdm.write(f"\n  ✓ {label} complete — {len(experiment.config_results)} configs\n")
 
         return experiment
 
