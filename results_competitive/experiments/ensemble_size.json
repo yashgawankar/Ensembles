@@ -1,0 +1,168 @@
+{
+  "variation_name": "ensemble_size",
+  "label": "Ensemble Size",
+  "config_results": [
+    {
+      "model_type": "rf",
+      "variation_name": "ensemble_size",
+      "parameter_name": "n_estimators",
+      "parameter_value": 5,
+      "bias_squared": 5507.449542424044,
+      "variance": 2163.2925252042132,
+      "mse": 7670.742067628257
+    },
+    {
+      "model_type": "xgb",
+      "variation_name": "ensemble_size",
+      "parameter_name": "n_estimators",
+      "parameter_value": 5,
+      "bias_squared": 16949.667710654125,
+      "variance": 157.80901349223245,
+      "mse": 17107.476724146356
+    },
+    {
+      "model_type": "bagged_xgb",
+      "variation_name": "ensemble_size",
+      "parameter_name": "outer_n_estimators",
+      "parameter_value": 5,
+      "bias_squared": 1800.6560843046386,
+      "variance": 182.61149651330942,
+      "mse": 1983.267580817948
+    },
+    {
+      "model_type": "rf",
+      "variation_name": "ensemble_size",
+      "parameter_name": "n_estimators",
+      "parameter_value": 10,
+      "bias_squared": 5187.476728672494,
+      "variance": 1088.704054327537,
+      "mse": 6276.180783000031
+    },
+    {
+      "model_type": "xgb",
+      "variation_name": "ensemble_size",
+      "parameter_name": "n_estimators",
+      "parameter_value": 10,
+      "bias_squared": 11242.923581951534,
+      "variance": 252.6784812441992,
+      "mse": 11495.602063195733
+    },
+    {
+      "model_type": "bagged_xgb",
+      "variation_name": "ensemble_size",
+      "parameter_name": "outer_n_estimators",
+      "parameter_value": 10,
+      "bias_squared": 1800.5100772341054,
+      "variance": 148.43993556645844,
+      "mse": 1948.9500128005639
+    },
+    {
+      "model_type": "rf",
+      "variation_name": "ensemble_size",
+      "parameter_name": "n_estimators",
+      "parameter_value": 25,
+      "bias_squared": 5172.796253195661,
+      "variance": 484.137389025025,
+      "mse": 5656.933642220686
+    },
+    {
+      "model_type": "xgb",
+      "variation_name": "ensemble_size",
+      "parameter_name": "n_estimators",
+      "parameter_value": 25,
+      "bias_squared": 4533.7093853194365,
+      "variance": 351.9830228107575,
+      "mse": 4885.692408130194
+    },
+    {
+      "model_type": "bagged_xgb",
+      "variation_name": "ensemble_size",
+      "parameter_name": "outer_n_estimators",
+      "parameter_value": 25,
+      "bias_squared": 1803.0929212515796,
+      "variance": 127.98243458604088,
+      "mse": 1931.0753558376205
+    },
+    {
+      "model_type": "rf",
+      "variation_name": "ensemble_size",
+      "parameter_name": "n_estimators",
+      "parameter_value": 50,
+      "bias_squared": 5294.438951795878,
+      "variance": 286.9787672618982,
+      "mse": 5581.417719057777
+    },
+    {
+      "model_type": "xgb",
+      "variation_name": "ensemble_size",
+      "parameter_name": "n_estimators",
+      "parameter_value": 50,
+      "bias_squared": 1719.9018962402074,
+      "variance": 359.1010047687926,
+      "mse": 2079.002901009
+    },
+    {
+      "model_type": "bagged_xgb",
+      "variation_name": "ensemble_size",
+      "parameter_name": "outer_n_estimators",
+      "parameter_value": 50,
+      "bias_squared": 1801.8126410981147,
+      "variance": 121.1837925890582,
+      "mse": 1922.9964336871728
+    },
+    {
+      "model_type": "rf",
+      "variation_name": "ensemble_size",
+      "parameter_name": "n_estimators",
+      "parameter_value": 100,
+      "bias_squared": 5217.555181430133,
+      "variance": 192.2285277698243,
+      "mse": 5409.783709199958
+    },
+    {
+      "model_type": "xgb",
+      "variation_name": "ensemble_size",
+      "parameter_name": "n_estimators",
+      "parameter_value": 100,
+      "bias_squared": 783.1314645234212,
+      "variance": 351.6428420002922,
+      "mse": 1134.7743065237134
+    },
+    {
+      "model_type": "bagged_xgb",
+      "variation_name": "ensemble_size",
+      "parameter_name": "outer_n_estimators",
+      "parameter_value": 100,
+      "bias_squared": 1802.3176581053724,
+      "variance": 116.99323875246304,
+      "mse": 1919.3108968578354
+    },
+    {
+      "model_type": "rf",
+      "variation_name": "ensemble_size",
+      "parameter_name": "n_estimators",
+      "parameter_value": 200,
+      "bias_squared": 5197.804840879778,
+      "variance": 146.07288316637002,
+      "mse": 5343.877724046148
+    },
+    {
+      "model_type": "xgb",
+      "variation_name": "ensemble_size",
+      "parameter_name": "n_estimators",
+      "parameter_value": 200,
+      "bias_squared": 616.7186352560548,
+      "variance": 348.7051622983441,
+      "mse": 965.4237975543988
+    },
+    {
+      "model_type": "bagged_xgb",
+      "variation_name": "ensemble_size",
+      "parameter_name": "outer_n_estimators",
+      "parameter_value": 200,
+      "bias_squared": 1802.0932657879919,
+      "variance": 115.34248076163655,
+      "mse": 1917.4357465496284
+    }
+  ]
+}

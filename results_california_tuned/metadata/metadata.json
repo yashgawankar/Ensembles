@@ -1,0 +1,27 @@
+{
+  "dataset": {
+    "type": "california_housing",
+    "n_samples": 20640,
+    "n_features": 8,
+    "feature_names": [
+      "MedInc",
+      "HouseAge",
+      "AveRooms",
+      "AveBedrms",
+      "Population",
+      "AveOccup",
+      "Latitude",
+      "Longitude"
+    ],
+    "target": "Median house value (100k USD)",
+    "noise_variants_supported": false
+  },
+  "timestamp": "2026-05-10T15:52:03.421173",
+  "n_bootstrap": 50,
+  "experiments": [
+    "ensemble_size",
+    "depth",
+    "train_size"
+  ],
+  "quick_mode": false
+}

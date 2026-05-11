@@ -1,0 +1,204 @@
+{
+  "variation_name": "depth",
+  "label": "Base Learner Depth",
+  "config_results": [
+    {
+      "model_type": "rf",
+      "variation_name": "depth",
+      "parameter_name": "max_depth",
+      "parameter_value": 2,
+      "bias_squared": 0.8412466596162849,
+      "variance": 0.0016291037268416984,
+      "mse": 0.8428757633431265
+    },
+    {
+      "model_type": "xgb",
+      "variation_name": "depth",
+      "parameter_name": "max_depth",
+      "parameter_value": 2,
+      "bias_squared": 0.3469337171776448,
+      "variance": 0.004697206508999092,
+      "mse": 0.3516309236866439
+    },
+    {
+      "model_type": "bagged_xgb",
+      "variation_name": "depth",
+      "parameter_name": "inner_max_depth",
+      "parameter_value": 2,
+      "bias_squared": 0.42427570403495807,
+      "variance": 0.0020507555429144977,
+      "mse": 0.4263264595778726
+    },
+    {
+      "model_type": "rf",
+      "variation_name": "depth",
+      "parameter_name": "max_depth",
+      "parameter_value": 4,
+      "bias_squared": 0.5880251599605827,
+      "variance": 0.0026101401002903866,
+      "mse": 0.5906353000608731
+    },
+    {
+      "model_type": "xgb",
+      "variation_name": "depth",
+      "parameter_name": "max_depth",
+      "parameter_value": 4,
+      "bias_squared": 0.2605615749262003,
+      "variance": 0.01061466491366751,
+      "mse": 0.2711762398398678
+    },
+    {
+      "model_type": "bagged_xgb",
+      "variation_name": "depth",
+      "parameter_name": "inner_max_depth",
+      "parameter_value": 4,
+      "bias_squared": 0.30123756019182363,
+      "variance": 0.004431410356194026,
+      "mse": 0.30566897054801767
+    },
+    {
+      "model_type": "rf",
+      "variation_name": "depth",
+      "parameter_name": "max_depth",
+      "parameter_value": 6,
+      "bias_squared": 0.4426138605282971,
+      "variance": 0.003371427549731599,
+      "mse": 0.4459852880780287
+    },
+    {
+      "model_type": "xgb",
+      "variation_name": "depth",
+      "parameter_name": "max_depth",
+      "parameter_value": 6,
+      "bias_squared": 0.22553526658067824,
+      "variance": 0.01702535183780549,
+      "mse": 0.24256061841848373
+    },
+    {
+      "model_type": "bagged_xgb",
+      "variation_name": "depth",
+      "parameter_name": "inner_max_depth",
+      "parameter_value": 6,
+      "bias_squared": 0.25696607323147636,
+      "variance": 0.007035145374790772,
+      "mse": 0.26400121860626713
+    },
+    {
+      "model_type": "rf",
+      "variation_name": "depth",
+      "parameter_name": "max_depth",
+      "parameter_value": 8,
+      "bias_squared": 0.36111945680450336,
+      "variance": 0.0044367895193986135,
+      "mse": 0.365556246323902
+    },
+    {
+      "model_type": "xgb",
+      "variation_name": "depth",
+      "parameter_name": "max_depth",
+      "parameter_value": 8,
+      "bias_squared": 0.21403369006763345,
+      "variance": 0.023570147895462083,
+      "mse": 0.23760383796309553
+    },
+    {
+      "model_type": "bagged_xgb",
+      "variation_name": "depth",
+      "parameter_name": "inner_max_depth",
+      "parameter_value": 8,
+      "bias_squared": 0.23967744319032513,
+      "variance": 0.0097060473245441,
+      "mse": 0.24938349051486924
+    },
+    {
+      "model_type": "rf",
+      "variation_name": "depth",
+      "parameter_name": "max_depth",
+      "parameter_value": 10,
+      "bias_squared": 0.3138912274104602,
+      "variance": 0.005398993990240259,
+      "mse": 0.31929022140070046
+    },
+    {
+      "model_type": "xgb",
+      "variation_name": "depth",
+      "parameter_name": "max_depth",
+      "parameter_value": 10,
+      "bias_squared": 0.22108423320533896,
+      "variance": 0.02991851127229673,
+      "mse": 0.2510027444776357
+    },
+    {
+      "model_type": "bagged_xgb",
+      "variation_name": "depth",
+      "parameter_name": "inner_max_depth",
+      "parameter_value": 10,
+      "bias_squared": 0.24091271016353616,
+      "variance": 0.012542627469651353,
+      "mse": 0.2534553376331875
+    },
+    {
+      "model_type": "rf",
+      "variation_name": "depth",
+      "parameter_name": "max_depth",
+      "parameter_value": 15,
+      "bias_squared": 0.26433050551052967,
+      "variance": 0.007714215554787081,
+      "mse": 0.27204472106531674
+    },
+    {
+      "model_type": "xgb",
+      "variation_name": "depth",
+      "parameter_name": "max_depth",
+      "parameter_value": 15,
+      "bias_squared": 0.24476929134599806,
+      "variance": 0.05421836600467829,
+      "mse": 0.29898765735067634
+    },
+    {
+      "model_type": "bagged_xgb",
+      "variation_name": "depth",
+      "parameter_name": "inner_max_depth",
+      "parameter_value": 15,
+      "bias_squared": 0.2559875159996389,
+      "variance": 0.019627046814911925,
+      "mse": 0.2756145628145509
+    },
+    {
+      "model_type": "rf",
+      "variation_name": "depth",
+      "parameter_name": "max_depth",
+      "parameter_value": 20,
+      "bias_squared": 0.2567414533723346,
+      "variance": 0.0086284337111919,
+      "mse": 0.2653698870835265
+    },
+    {
+      "model_type": "xgb",
+      "variation_name": "depth",
+      "parameter_name": "max_depth",
+      "parameter_value": 20,
+      "bias_squared": 0.25007215375290215,
+      "variance": 0.06577262722562165,
+      "mse": 0.3158447809785238
+    },
+    {
+      "model_type": "bagged_xgb",
+      "variation_name": "depth",
+      "parameter_name": "inner_max_depth",
+      "parameter_value": 20,
+      "bias_squared": 0.259522759604526,
+      "variance": 0.021613340099057615,
+      "mse": 0.2811360997035836
+    },
+    {
+      "model_type": "rf",
+      "variation_name": "depth",
+      "parameter_name": "max_depth",
+      "parameter_value": null,
+      "bias_squared": 0.2554300725905631,
+      "variance": 0.008713178502061781,
+      "mse": 0.2641432510926249
+    }
+  ]
+}

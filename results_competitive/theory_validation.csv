@@ -1,0 +1,2 @@
+Condition,Bias² RF,Var RF,Bias² XGB,Var XGB,"Cov(RF,XGB)",λ* Convex (theory),λ* Convex (empirical),λ* Prob (theory),λ* Prob (empirical),MSE RF,MSE XGB,MSE Convex @ λ*,MSE Prob @ λ*
+baseline,5197.8048,146.0729,616.7186,348.7052,61.4316,1.0,1.0,0.0,1.0,5343.8777,965.4238,965.4238,965.4238

@@ -1,0 +1,82 @@
+{
+  "name": "probabilistic_baseline",
+  "results": [
+    {
+      "lambda": 0.0,
+      "hybrid_type": "probabilistic",
+      "bias_squared": 0.3108615405183024,
+      "variance": 0.004331333709743774,
+      "mse": 0.31519287422804615
+    },
+    {
+      "lambda": 0.1,
+      "hybrid_type": "probabilistic",
+      "bias_squared": 0.29584663940523037,
+      "variance": 0.004348962695020032,
+      "mse": 0.3001956021002504
+    },
+    {
+      "lambda": 0.2,
+      "hybrid_type": "probabilistic",
+      "bias_squared": 0.2819784632294951,
+      "variance": 0.004640294040840789,
+      "mse": 0.28661875727033587
+    },
+    {
+      "lambda": 0.3,
+      "hybrid_type": "probabilistic",
+      "bias_squared": 0.2694205637839485,
+      "variance": 0.005231263348295656,
+      "mse": 0.2746518271322442
+    },
+    {
+      "lambda": 0.4,
+      "hybrid_type": "probabilistic",
+      "bias_squared": 0.2580462559162238,
+      "variance": 0.0060994307613131665,
+      "mse": 0.26414568667753696
+    },
+    {
+      "lambda": 0.5,
+      "hybrid_type": "probabilistic",
+      "bias_squared": 0.24802561019939348,
+      "variance": 0.00722778863517388,
+      "mse": 0.2552533988345674
+    },
+    {
+      "lambda": 0.6,
+      "hybrid_type": "probabilistic",
+      "bias_squared": 0.23932533736410286,
+      "variance": 0.008641965044760775,
+      "mse": 0.24796730240886364
+    },
+    {
+      "lambda": 0.7,
+      "hybrid_type": "probabilistic",
+      "bias_squared": 0.2317260827989239,
+      "variance": 0.010304792642720897,
+      "mse": 0.2420308754416448
+    },
+    {
+      "lambda": 0.8,
+      "hybrid_type": "probabilistic",
+      "bias_squared": 0.22546085097123,
+      "variance": 0.012294814174602368,
+      "mse": 0.23775566514583238
+    },
+    {
+      "lambda": 0.9,
+      "hybrid_type": "probabilistic",
+      "bias_squared": 0.22048681917327495,
+      "variance": 0.014547924844190378,
+      "mse": 0.23503474401746532
+    },
+    {
+      "lambda": 1.0,
+      "hybrid_type": "probabilistic",
+      "bias_squared": 0.21676766190551164,
+      "variance": 0.017077527998090477,
+      "mse": 0.23384518990360212
+    }
+  ]
+}

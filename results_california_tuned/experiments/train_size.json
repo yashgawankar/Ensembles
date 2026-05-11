@@ -1,0 +1,141 @@
+{
+  "variation_name": "train_size",
+  "label": "Training Set Size",
+  "config_results": [
+    {
+      "model_type": "rf",
+      "variation_name": "train_size",
+      "parameter_name": "_dataset_size",
+      "parameter_value": 500,
+      "bias_squared": 0.4564719328586373,
+      "variance": 0.026050383687456255,
+      "mse": 0.48252231654609357
+    },
+    {
+      "model_type": "xgb",
+      "variation_name": "train_size",
+      "parameter_name": "_dataset_size",
+      "parameter_value": 500,
+      "bias_squared": 0.3937668203842477,
+      "variance": 0.07664301626525112,
+      "mse": 0.4704098366494988
+    },
+    {
+      "model_type": "bagged_xgb",
+      "variation_name": "train_size",
+      "parameter_name": "_dataset_size",
+      "parameter_value": 500,
+      "bias_squared": 0.4183538999714959,
+      "variance": 0.03920808570561405,
+      "mse": 0.45756198567711
+    },
+    {
+      "model_type": "rf",
+      "variation_name": "train_size",
+      "parameter_name": "_dataset_size",
+      "parameter_value": 1000,
+      "bias_squared": 0.40128371274066366,
+      "variance": 0.018367585448798112,
+      "mse": 0.4196512981894618
+    },
+    {
+      "model_type": "xgb",
+      "variation_name": "train_size",
+      "parameter_name": "_dataset_size",
+      "parameter_value": 1000,
+      "bias_squared": 0.32666726804155144,
+      "variance": 0.04900674332006737,
+      "mse": 0.3756740113616188
+    },
+    {
+      "model_type": "bagged_xgb",
+      "variation_name": "train_size",
+      "parameter_name": "_dataset_size",
+      "parameter_value": 1000,
+      "bias_squared": 0.3535784902640737,
+      "variance": 0.025492514207945363,
+      "mse": 0.379071004472019
+    },
+    {
+      "model_type": "rf",
+      "variation_name": "train_size",
+      "parameter_name": "_dataset_size",
+      "parameter_value": 2000,
+      "bias_squared": 0.3690353537496965,
+      "variance": 0.014601113210918478,
+      "mse": 0.383636466960615
+    },
+    {
+      "model_type": "xgb",
+      "variation_name": "train_size",
+      "parameter_name": "_dataset_size",
+      "parameter_value": 2000,
+      "bias_squared": 0.30270912365522107,
+      "variance": 0.037778145217957936,
+      "mse": 0.340487268873179
+    },
+    {
+      "model_type": "bagged_xgb",
+      "variation_name": "train_size",
+      "parameter_name": "_dataset_size",
+      "parameter_value": 2000,
+      "bias_squared": 0.3273223613697703,
+      "variance": 0.018303417293332052,
+      "mse": 0.34562577866310235
+    },
+    {
+      "model_type": "rf",
+      "variation_name": "train_size",
+      "parameter_name": "_dataset_size",
+      "parameter_value": 4000,
+      "bias_squared": 0.3390256947712672,
+      "variance": 0.010794262063530615,
+      "mse": 0.34981995683479783
+    },
+    {
+      "model_type": "xgb",
+      "variation_name": "train_size",
+      "parameter_name": "_dataset_size",
+      "parameter_value": 4000,
+      "bias_squared": 0.25977902163661326,
+      "variance": 0.027963019004877528,
+      "mse": 0.2877420406414908
+    },
+    {
+      "model_type": "bagged_xgb",
+      "variation_name": "train_size",
+      "parameter_name": "_dataset_size",
+      "parameter_value": 4000,
+      "bias_squared": 0.294906599364275,
+      "variance": 0.012836444459790566,
+      "mse": 0.30774304382406553
+    },
+    {
+      "model_type": "rf",
+      "variation_name": "train_size",
+      "parameter_name": "_dataset_size",
+      "parameter_value": 8000,
+      "bias_squared": 0.3255681469043472,
+      "variance": 0.00787975342832644,
+      "mse": 0.33344790033267363
+    },
+    {
+      "model_type": "xgb",
+      "variation_name": "train_size",
+      "parameter_name": "_dataset_size",
+      "parameter_value": 8000,
+      "bias_squared": 0.24820405152154215,
+      "variance": 0.02063727808489112,
+      "mse": 0.26884132960643325
+    },
+    {
+      "model_type": "bagged_xgb",
+      "variation_name": "train_size",
+      "parameter_name": "_dataset_size",
+      "parameter_value": 8000,
+      "bias_squared": 0.2796009935446111,
+      "variance": 0.009279520091742127,
+      "mse": 0.28888051363635325
+    }
+  ]
+}

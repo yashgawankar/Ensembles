@@ -1,0 +1,82 @@
+{
+  "name": "convex_baseline",
+  "results": [
+    {
+      "lambda": 0.0,
+      "hybrid_type": "convex",
+      "bias_squared": 0.3108615405183024,
+      "variance": 0.004331333709743774,
+      "mse": 0.31519287422804615
+    },
+    {
+      "lambda": 0.1,
+      "hybrid_type": "convex",
+      "bias_squared": 0.2957802047398032,
+      "variance": 0.00428400594878364,
+      "mse": 0.30006421068858685
+    },
+    {
+      "lambda": 0.2,
+      "hybrid_type": "convex",
+      "bias_squared": 0.2819593018317974,
+      "variance": 0.004530444230000127,
+      "mse": 0.28648974606179756
+    },
+    {
+      "lambda": 0.3,
+      "hybrid_type": "convex",
+      "bias_squared": 0.2693988317942849,
+      "variance": 0.005070648553393239,
+      "mse": 0.27446948034767815
+    },
+    {
+      "lambda": 0.4,
+      "hybrid_type": "convex",
+      "bias_squared": 0.2580987946272658,
+      "variance": 0.005904618918962975,
+      "mse": 0.2640034135462288
+    },
+    {
+      "lambda": 0.5,
+      "hybrid_type": "convex",
+      "bias_squared": 0.24805919033074011,
+      "variance": 0.007032355326709333,
+      "mse": 0.25509154565744946
+    },
+    {
+      "lambda": 0.6,
+      "hybrid_type": "convex",
+      "bias_squared": 0.23928001890470765,
+      "variance": 0.008453857776632314,
+      "mse": 0.24773387668133998
+    },
+    {
+      "lambda": 0.7,
+      "hybrid_type": "convex",
+      "bias_squared": 0.23176128034916865,
+      "variance": 0.010169126268731921,
+      "mse": 0.24193040661790058
+    },
+    {
+      "lambda": 0.8,
+      "hybrid_type": "convex",
+      "bias_squared": 0.22550297466412297,
+      "variance": 0.012178160803008152,
+      "mse": 0.23768113546713113
+    },
+    {
+      "lambda": 0.9,
+      "hybrid_type": "convex",
+      "bias_squared": 0.22050510184957067,
+      "variance": 0.014480961379461005,
+      "mse": 0.23498606322903168
+    },
+    {
+      "lambda": 1.0,
+      "hybrid_type": "convex",
+      "bias_squared": 0.21676766190551164,
+      "variance": 0.017077527998090477,
+      "mse": 0.23384518990360212
+    }
+  ]
+}
