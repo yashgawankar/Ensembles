@@ -1,0 +1,93 @@
+{
+  "name": "prob_rf_svr",
+  "results": [
+    {
+      "lambda": 0.0,
+      "hybrid_type": "probabilistic",
+      "bias_squared": 4099.931888076052,
+      "variance": 153.88925986836446,
+      "mse": 4253.821147944416,
+      "pair_name": "rf_svr"
+    },
+    {
+      "lambda": 0.1,
+      "hybrid_type": "probabilistic",
+      "bias_squared": 3369.847924562538,
+      "variance": 128.23620908455987,
+      "mse": 3498.084133647098,
+      "pair_name": "rf_svr"
+    },
+    {
+      "lambda": 0.2,
+      "hybrid_type": "probabilistic",
+      "bias_squared": 2716.0470693612656,
+      "variance": 104.87197171097036,
+      "mse": 2820.919041072236,
+      "pair_name": "rf_svr"
+    },
+    {
+      "lambda": 0.3,
+      "hybrid_type": "probabilistic",
+      "bias_squared": 2137.733253667938,
+      "variance": 83.62344018751988,
+      "mse": 2221.3566938554577,
+      "pair_name": "rf_svr"
+    },
+    {
+      "lambda": 0.4,
+      "hybrid_type": "probabilistic",
+      "bias_squared": 1636.4331883901452,
+      "variance": 65.17441029455507,
+      "mse": 1701.6075986847004,
+      "pair_name": "rf_svr"
+    },
+    {
+      "lambda": 0.5,
+      "hybrid_type": "probabilistic",
+      "bias_squared": 1212.0741205275194,
+      "variance": 49.03645891302949,
+      "mse": 1261.110579440549,
+      "pair_name": "rf_svr"
+    },
+    {
+      "lambda": 0.6,
+      "hybrid_type": "probabilistic",
+      "bias_squared": 863.1891967513291,
+      "variance": 35.16595358555852,
+      "mse": 898.3551503368876,
+      "pair_name": "rf_svr"
+    },
+    {
+      "lambda": 0.7,
+      "hybrid_type": "probabilistic",
+      "bias_squared": 590.4662311417471,
+      "variance": 23.734299895813216,
+      "mse": 614.2005310375604,
+      "pair_name": "rf_svr"
+    },
+    {
+      "lambda": 0.8,
+      "hybrid_type": "probabilistic",
+      "bias_squared": 395.0666986401074,
+      "variance": 14.723370070968398,
+      "mse": 409.7900687110758,
+      "pair_name": "rf_svr"
+    },
+    {
+      "lambda": 0.9,
+      "hybrid_type": "probabilistic",
+      "bias_squared": 274.8759878832052,
+      "variance": 8.039176399208165,
+      "mse": 282.91516428241334,
+      "pair_name": "rf_svr"
+    },
+    {
+      "lambda": 1.0,
+      "hybrid_type": "probabilistic",
+      "bias_squared": 230.4934898980795,
+      "variance": 3.710121072017225,
+      "mse": 234.20361097009672,
+      "pair_name": "rf_svr"
+    }
+  ]
+}

@@ -1,0 +1,141 @@
+{
+  "variation_name": "train_size",
+  "label": "Training Set Size",
+  "config_results": [
+    {
+      "model_type": "rf",
+      "variation_name": "train_size",
+      "parameter_name": "_dataset_size",
+      "parameter_value": 500,
+      "bias_squared": 9048.470282531965,
+      "variance": 511.6058644026813,
+      "mse": 9560.076146934647
+    },
+    {
+      "model_type": "xgb",
+      "variation_name": "train_size",
+      "parameter_name": "_dataset_size",
+      "parameter_value": 500,
+      "bias_squared": 2132.7744153299836,
+      "variance": 833.5941984015919,
+      "mse": 2966.3686137315754
+    },
+    {
+      "model_type": "bagged_xgb",
+      "variation_name": "train_size",
+      "parameter_name": "_dataset_size",
+      "parameter_value": 500,
+      "bias_squared": 3079.769490171135,
+      "variance": 409.6434760660742,
+      "mse": 3489.4129662372093
+    },
+    {
+      "model_type": "rf",
+      "variation_name": "train_size",
+      "parameter_name": "_dataset_size",
+      "parameter_value": 1000,
+      "bias_squared": 7065.974240887338,
+      "variance": 414.442471072666,
+      "mse": 7480.416711960004
+    },
+    {
+      "model_type": "xgb",
+      "variation_name": "train_size",
+      "parameter_name": "_dataset_size",
+      "parameter_value": 1000,
+      "bias_squared": 1167.765954084965,
+      "variance": 584.6388640451144,
+      "mse": 1752.4048181300793
+    },
+    {
+      "model_type": "bagged_xgb",
+      "variation_name": "train_size",
+      "parameter_name": "_dataset_size",
+      "parameter_value": 1000,
+      "bias_squared": 1997.684741109563,
+      "variance": 290.0126586123876,
+      "mse": 2287.6973997219507
+    },
+    {
+      "model_type": "rf",
+      "variation_name": "train_size",
+      "parameter_name": "_dataset_size",
+      "parameter_value": 2000,
+      "bias_squared": 5977.59022319864,
+      "variance": 317.02669995989885,
+      "mse": 6294.616923158539
+    },
+    {
+      "model_type": "xgb",
+      "variation_name": "train_size",
+      "parameter_name": "_dataset_size",
+      "parameter_value": 2000,
+      "bias_squared": 706.8577113727913,
+      "variance": 421.6278128009434,
+      "mse": 1128.4855241737346
+    },
+    {
+      "model_type": "bagged_xgb",
+      "variation_name": "train_size",
+      "parameter_name": "_dataset_size",
+      "parameter_value": 2000,
+      "bias_squared": 1520.5849546779036,
+      "variance": 202.9521161985005,
+      "mse": 1723.5370708764042
+    },
+    {
+      "model_type": "rf",
+      "variation_name": "train_size",
+      "parameter_name": "_dataset_size",
+      "parameter_value": 4000,
+      "bias_squared": 4824.022236538219,
+      "variance": 265.1623386460688,
+      "mse": 5089.1845751842875
+    },
+    {
+      "model_type": "xgb",
+      "variation_name": "train_size",
+      "parameter_name": "_dataset_size",
+      "parameter_value": 4000,
+      "bias_squared": 489.16729091090514,
+      "variance": 306.04699641407757,
+      "mse": 795.2142873249827
+    },
+    {
+      "model_type": "bagged_xgb",
+      "variation_name": "train_size",
+      "parameter_name": "_dataset_size",
+      "parameter_value": 4000,
+      "bias_squared": 1270.1877804690064,
+      "variance": 145.33237262368576,
+      "mse": 1415.5201530926922
+    },
+    {
+      "model_type": "rf",
+      "variation_name": "train_size",
+      "parameter_name": "_dataset_size",
+      "parameter_value": 8000,
+      "bias_squared": 4114.3740969113605,
+      "variance": 221.61953952900046,
+      "mse": 4335.993636440361
+    },
+    {
+      "model_type": "xgb",
+      "variation_name": "train_size",
+      "parameter_name": "_dataset_size",
+      "parameter_value": 8000,
+      "bias_squared": 375.03849686258,
+      "variance": 245.41161423471397,
+      "mse": 620.450111097294
+    },
+    {
+      "model_type": "bagged_xgb",
+      "variation_name": "train_size",
+      "parameter_name": "_dataset_size",
+      "parameter_value": 8000,
+      "bias_squared": 1089.0045951202753,
+      "variance": 110.60480872355754,
+      "mse": 1199.6094038438328
+    }
+  ]
+}
