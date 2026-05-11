@@ -1,0 +1,93 @@
+{
+  "name": "prob_xgb_svr",
+  "results": [
+    {
+      "lambda": 0.0,
+      "hybrid_type": "probabilistic",
+      "bias_squared": 0.22367742337314817,
+      "variance": 0.014364297187884697,
+      "mse": 0.23804172056103287,
+      "pair_name": "xgb_svr"
+    },
+    {
+      "lambda": 0.1,
+      "hybrid_type": "probabilistic",
+      "bias_squared": 0.22785039428771606,
+      "variance": 0.011923155193437588,
+      "mse": 0.23977354948115365,
+      "pair_name": "xgb_svr"
+    },
+    {
+      "lambda": 0.2,
+      "hybrid_type": "probabilistic",
+      "bias_squared": 0.23444324188340024,
+      "variance": 0.00996968405948102,
+      "mse": 0.24441292594288125,
+      "pair_name": "xgb_svr"
+    },
+    {
+      "lambda": 0.3,
+      "hybrid_type": "probabilistic",
+      "bias_squared": 0.24351200161792017,
+      "variance": 0.00851273406003017,
+      "mse": 0.25202473567795036,
+      "pair_name": "xgb_svr"
+    },
+    {
+      "lambda": 0.4,
+      "hybrid_type": "probabilistic",
+      "bias_squared": 0.25507134804737314,
+      "variance": 0.007597013033606471,
+      "mse": 0.26266836108097963,
+      "pair_name": "xgb_svr"
+    },
+    {
+      "lambda": 0.5,
+      "hybrid_type": "probabilistic",
+      "bias_squared": 0.2691347854491012,
+      "variance": 0.007205213265128534,
+      "mse": 0.2763399987142297,
+      "pair_name": "xgb_svr"
+    },
+    {
+      "lambda": 0.6,
+      "hybrid_type": "probabilistic",
+      "bias_squared": 0.28516641297836254,
+      "variance": 0.0072696959269266505,
+      "mse": 0.2924361089052892,
+      "pair_name": "xgb_svr"
+    },
+    {
+      "lambda": 0.7,
+      "hybrid_type": "probabilistic",
+      "bias_squared": 0.30392701049062004,
+      "variance": 0.0079322087919729,
+      "mse": 0.31185921928259297,
+      "pair_name": "xgb_svr"
+    },
+    {
+      "lambda": 0.8,
+      "hybrid_type": "probabilistic",
+      "bias_squared": 0.3250269497369513,
+      "variance": 0.009081919816492793,
+      "mse": 0.3341088695534441,
+      "pair_name": "xgb_svr"
+    },
+    {
+      "lambda": 0.9,
+      "hybrid_type": "probabilistic",
+      "bias_squared": 0.3485402534079817,
+      "variance": 0.010742944569039738,
+      "mse": 0.35928319797702146,
+      "pair_name": "xgb_svr"
+    },
+    {
+      "lambda": 1.0,
+      "hybrid_type": "probabilistic",
+      "bias_squared": 0.37453144166817487,
+      "variance": 0.012913532987524927,
+      "mse": 0.38744497465569977,
+      "pair_name": "xgb_svr"
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "name": "convex_xgb_svr",
+  "results": [
+    {
+      "lambda": 0.0,
+      "hybrid_type": "convex",
+      "bias_squared": 0.22367742337314817,
+      "variance": 0.014364297187884697,
+      "mse": 0.23804172056103287,
+      "pair_name": "xgb_svr"
+    },
+    {
+      "lambda": 0.1,
+      "hybrid_type": "convex",
+      "bias_squared": 0.2278837647732622,
+      "variance": 0.011766851006839453,
+      "mse": 0.23965061578010163,
+      "pair_name": "xgb_svr"
+    },
+    {
+      "lambda": 0.2,
+      "hybrid_type": "convex",
+      "bias_squared": 0.23450767515768478,
+      "variance": 0.009714375883796264,
+      "mse": 0.24422205104148104,
+      "pair_name": "xgb_svr"
+    },
+    {
+      "lambda": 0.3,
+      "hybrid_type": "convex",
+      "bias_squared": 0.24354915452641598,
+      "variance": 0.008206871818755136,
+      "mse": 0.25175602634517114,
+      "pair_name": "xgb_svr"
+    },
+    {
+      "lambda": 0.4,
+      "hybrid_type": "convex",
+      "bias_squared": 0.25500820287945575,
+      "variance": 0.00724433881171607,
+      "mse": 0.2622525416911718,
+      "pair_name": "xgb_svr"
+    },
+    {
+      "lambda": 0.5,
+      "hybrid_type": "convex",
+      "bias_squared": 0.26888482021680415,
+      "variance": 0.006826776862679064,
+      "mse": 0.27571159707948323,
+      "pair_name": "xgb_svr"
+    },
+    {
+      "lambda": 0.6,
+      "hybrid_type": "convex",
+      "bias_squared": 0.2851790065384611,
+      "variance": 0.006954185971644116,
+      "mse": 0.2921331925101052,
+      "pair_name": "xgb_svr"
+    },
+    {
+      "lambda": 0.7,
+      "hybrid_type": "convex",
+      "bias_squared": 0.30389076184442665,
+      "variance": 0.007626566138611229,
+      "mse": 0.3115173279830379,
+      "pair_name": "xgb_svr"
+    },
+    {
+      "lambda": 0.8,
+      "hybrid_type": "convex",
+      "bias_squared": 0.3250200861347008,
+      "variance": 0.008843917363580402,
+      "mse": 0.3338640034982812,
+      "pair_name": "xgb_svr"
+    },
+    {
+      "lambda": 0.9,
+      "hybrid_type": "convex",
+      "bias_squared": 0.34856697940928355,
+      "variance": 0.010606239646551635,
+      "mse": 0.3591732190558352,
+      "pair_name": "xgb_svr"
+    },
+    {
+      "lambda": 1.0,
+      "hybrid_type": "convex",
+      "bias_squared": 0.37453144166817487,
+      "variance": 0.012913532987524927,
+      "mse": 0.38744497465569977,
+      "pair_name": "xgb_svr"
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "name": "convex_rf_svr",
+  "results": [
+    {
+      "lambda": 0.0,
+      "hybrid_type": "convex",
+      "bias_squared": 0.25426862193359745,
+      "variance": 0.006988868290875873,
+      "mse": 0.2612574902244733,
+      "pair_name": "rf_svr"
+    },
+    {
+      "lambda": 0.1,
+      "hybrid_type": "convex",
+      "bias_squared": 0.25759356912237324,
+      "variance": 0.005789436982618904,
+      "mse": 0.26338300610499216,
+      "pair_name": "rf_svr"
+    },
+    {
+      "lambda": 0.2,
+      "hybrid_type": "convex",
+      "bias_squared": 0.26285214626330067,
+      "variance": 0.004988205180566797,
+      "mse": 0.2678403514438675,
+      "pair_name": "rf_svr"
+    },
+    {
+      "lambda": 0.3,
+      "hybrid_type": "convex",
+      "bias_squared": 0.27004435335637955,
+      "variance": 0.004585172884719547,
+      "mse": 0.2746295262410991,
+      "pair_name": "rf_svr"
+    },
+    {
+      "lambda": 0.4,
+      "hybrid_type": "convex",
+      "bias_squared": 0.27917019040161,
+      "variance": 0.004580340095077162,
+      "mse": 0.2837505304966872,
+      "pair_name": "rf_svr"
+    },
+    {
+      "lambda": 0.5,
+      "hybrid_type": "convex",
+      "bias_squared": 0.2902296573989919,
+      "variance": 0.004973706811639636,
+      "mse": 0.29520336421063154,
+      "pair_name": "rf_svr"
+    },
+    {
+      "lambda": 0.6,
+      "hybrid_type": "convex",
+      "bias_squared": 0.3032227543485254,
+      "variance": 0.0057652730344069725,
+      "mse": 0.3089880273829324,
+      "pair_name": "rf_svr"
+    },
+    {
+      "lambda": 0.7,
+      "hybrid_type": "convex",
+      "bias_squared": 0.31814948125021053,
+      "variance": 0.006955038763379168,
+      "mse": 0.3251045200135897,
+      "pair_name": "rf_svr"
+    },
+    {
+      "lambda": 0.8,
+      "hybrid_type": "convex",
+      "bias_squared": 0.3350098381040471,
+      "variance": 0.008543003998556228,
+      "mse": 0.34355284210260334,
+      "pair_name": "rf_svr"
+    },
+    {
+      "lambda": 0.9,
+      "hybrid_type": "convex",
+      "bias_squared": 0.3538038249100352,
+      "variance": 0.010529168739938147,
+      "mse": 0.36433299364997335,
+      "pair_name": "rf_svr"
+    },
+    {
+      "lambda": 1.0,
+      "hybrid_type": "convex",
+      "bias_squared": 0.37453144166817487,
+      "variance": 0.012913532987524927,
+      "mse": 0.38744497465569977,
+      "pair_name": "rf_svr"
+    }
+  ]
+}
