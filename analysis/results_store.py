@@ -242,7 +242,7 @@ class ResultsStore:
     # ── Hybrid results save / load ────────────────────────────────────────
 
     def save_hybrid_result(self, name: str, results: Dict[float, HybridResult]):
-        """Persist hybrid results (convex or probabilistic) for one condition."""
+        """Persist hybrid results (convex or probabilistic) for one pair/condition."""
         self._hybrid_results[name] = results
 
         rows = []
@@ -253,6 +253,7 @@ class ResultsStore:
                 "bias_squared": _npy_safe_value(hr.bias_squared),
                 "variance": _npy_safe_value(hr.variance),
                 "mse": _npy_safe_value(hr.mse),
+                "pair_name": hr.pair_name,
             })
 
         with open(self._hybrid_path(name), "w") as f:
@@ -279,6 +280,7 @@ class ResultsStore:
                 variance=row["variance"],
                 mse=row["mse"],
                 all_predictions=np.array([]),  # Not stored on disk
+                pair_name=row.get("pair_name", ""),
             )
         self._hybrid_results[name] = results
         return results
@@ -330,18 +332,20 @@ class ResultsStore:
         rows = []
         for r in self._theory_rows:
             rows.append({
+                "Pair":                      r.pair_name,
                 "Condition":                 r.condition_name,
-                "Bias² RF":                  round(r.bias_rf, 4),
-                "Var RF":                    round(r.var_rf, 4),
-                "Bias² XGB":                 round(r.bias_xgb, 4),
-                "Var XGB":                   round(r.var_xgb, 4),
-                "Cov(RF,XGB)":               round(r.covariance, 4),
+                "Bias² A":                   round(r.bias_a, 4),
+                "Var A":                     round(r.var_a, 4),
+                "Bias² B":                   round(r.bias_b, 4),
+                "Var B":                     round(r.var_b, 4),
+                "ρ(A,B)":                    round(r.rho, 4),
+                "Cov(A,B)":                  round(r.covariance, 4),
                 "λ* Convex (theory)":        round(r.lambda_star_convex_theory, 4),
                 "λ* Convex (empirical)":     round(r.lambda_star_convex_empirical, 4),
                 "λ* Prob (theory)":          round(r.lambda_star_prob_theory, 4),
                 "λ* Prob (empirical)":       round(r.lambda_star_prob_empirical, 4),
-                "MSE RF":                    round(r.mse_rf, 4),
-                "MSE XGB":                   round(r.mse_xgb, 4),
+                "MSE A":                     round(r.mse_a, 4),
+                "MSE B":                     round(r.mse_b, 4),
                 "MSE Convex @ λ*":           round(r.mse_convex_at_star, 4),
                 "MSE Prob @ λ*":             round(r.mse_prob_at_star, 4),
             })

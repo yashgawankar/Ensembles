@@ -158,19 +158,27 @@ class TableBuilder:
     def build_hypothesis_verdict_table(
         self,
         experiments: Dict[str, ExperimentResult],
-        hybrid_convex: Optional[Dict[float, HybridResult]] = None,
-        hybrid_prob:   Optional[Dict[float, HybridResult]] = None,
-        theory_rows:   Optional[List[TheoryValidationRow]] = None,
+        hybrid_pairs: Optional[Dict[str, Dict]] = None,
+        theory_rows:  Optional[List[TheoryValidationRow]] = None,
     ) -> pd.DataFrame:
         """
-        Programmatically evaluate hypotheses H1-H7 where possible.
+        Programmatically evaluate hypotheses H1-H9 where possible.
         Observed values are extracted from stored results; verdicts that
         require visual inspection are marked as 'Visual Required'.
+
+        Parameters
+        ----------
+        experiments  : dict of ExperimentResult per variation
+        hybrid_pairs : dict keyed by pair name (e.g. "rf_xgb"), each value being
+                       {"convex": {λ→HybridResult}, "prob": {λ→HybridResult},
+                        "stats": dict, "preds_a": ndarray, "preds_b": ndarray}
+        theory_rows  : list of TheoryValidationRow
 
         Returns a DataFrame with columns:
         Hypothesis, Description, Prediction, Observed, Verdict
         """
         hypotheses: List[HypothesisVerdict] = []
+        hybrid_pairs = hybrid_pairs or {}
 
         # H1: Trajectory divergence
         h1_pred = (
@@ -216,19 +224,19 @@ class TableBuilder:
             verdict=h4_verdict,
         ))
 
-        # H5: Hybrid dominance – optimal λ* beats both parents
+        # H5: Hybrid dominance – optimal λ* beats both parents (any pair)
         h5_obs, h5_verdict = self._evaluate_h5_hybrid_dominance(
-            hybrid_convex, theory_rows
+            hybrid_pairs, theory_rows
         )
         hypotheses.append(HypothesisVerdict(
             hypothesis_id="H5",
             description="Optimal λ* achieves lower MSE than either parent model",
-            prediction="MSE(f_λ*) < min(MSE_RF, MSE_XGB)",
+            prediction="MSE(f_λ*) < min(MSE_A, MSE_B) for at least one hybrid pair",
             observed=h5_obs,
             verdict=h5_verdict,
         ))
 
-        # H6: Theoretical λ* accuracy
+        # H6: Theoretical λ* accuracy (RF+XGB baseline)
         h6_obs, h6_verdict = self._evaluate_h6_theory_accuracy(theory_rows)
         hypotheses.append(HypothesisVerdict(
             hypothesis_id="H6",
@@ -238,16 +246,46 @@ class TableBuilder:
             verdict=h6_verdict,
         ))
 
-        # H7: Convex achieves lower error than probabilistic
-        h7_obs, h7_verdict = self._evaluate_h7_convex_vs_prob(
-            hybrid_convex, hybrid_prob
-        )
+        # H7: Convex achieves lower error than probabilistic (per pair)
+        h7_obs, h7_verdict = self._evaluate_h7_convex_vs_prob(hybrid_pairs)
         hypotheses.append(HypothesisVerdict(
             hypothesis_id="H7",
             description="Convex hybrid achieves lower minimum MSE than probabilistic",
-            prediction="min MSE(convex) < min MSE(probabilistic)",
+            prediction="min MSE(convex) < min MSE(probabilistic) for each pair",
             observed=h7_obs,
             verdict=h7_verdict,
+        ))
+
+        # H8: Family diversity yields greater mixing benefit than strategy diversity
+        h8_obs, h8_verdict = self._evaluate_h8_family_diversity(hybrid_pairs)
+        hypotheses.append(HypothesisVerdict(
+            hypothesis_id="H8",
+            description=(
+                "Cross-family pairs achieve larger MSE reduction at λ* than "
+                "the within-family pair (RF+XGB)"
+            ),
+            prediction=(
+                "mean MSE-reduction over {RF+SVR, XGB+SVR} > MSE-reduction for RF+XGB; "
+                "mechanism: lower ρ(A,B) → wider variance-reduction channel"
+            ),
+            observed=h8_obs,
+            verdict=h8_verdict,
+        ))
+
+        # H9: Convex advantage over probabilistic is amplified for cross-family pairs
+        h9_obs, h9_verdict = self._evaluate_h9_convex_amplification(hybrid_pairs)
+        hypotheses.append(HypothesisVerdict(
+            hypothesis_id="H9",
+            description=(
+                "Convex hybrid advantage over probabilistic is amplified for "
+                "cross-family pairs"
+            ),
+            prediction=(
+                "(min_MSE_prob − min_MSE_convex) larger for {RF+SVR, XGB+SVR} "
+                "than for RF+XGB; mechanism: larger D² = E[(μ_A − μ_B)²]"
+            ),
+            observed=h9_obs,
+            verdict=h9_verdict,
         ))
 
         return pd.DataFrame([{
@@ -347,22 +385,37 @@ class TableBuilder:
 
     def _evaluate_h5_hybrid_dominance(
         self,
-        hybrid_convex: Optional[Dict],
+        hybrid_pairs: Dict[str, Dict],
         theory_rows: Optional[List[TheoryValidationRow]],
     ) -> Tuple[str, str]:
-        if hybrid_convex is None or not theory_rows:
+        if not hybrid_pairs or not theory_rows:
             return "Hybrid results not available", "Not Evaluated"
-        row = next((r for r in theory_rows if r.condition_name == "baseline"), None)
-        if row is None:
-            return "No baseline theory row", "Not Evaluated"
 
-        min_parent = min(row.mse_rf, row.mse_xgb)
-        mse_hybrid = row.mse_convex_at_star
-        obs = (
-            f"MSE RF={row.mse_rf:.4f}, MSE XGB={row.mse_xgb:.4f}, "
-            f"MSE Convex@λ*={mse_hybrid:.4f}"
-        )
-        verdict = "Supported" if mse_hybrid < min_parent else "Not Supported"
+        # For each pair, find the baseline row and compare MSE_convex@λ* with min(MSE_A, MSE_B).
+        per_pair_obs = []
+        any_supported = False
+        for pair_name in hybrid_pairs.keys():
+            row = next(
+                (r for r in theory_rows
+                 if r.condition_name == "baseline" and r.pair_name == pair_name),
+                None,
+            )
+            if row is None:
+                continue
+            min_parent = min(row.mse_a, row.mse_b)
+            reduction = min_parent - row.mse_convex_at_star
+            if row.mse_convex_at_star < min_parent:
+                any_supported = True
+            per_pair_obs.append(
+                f"{pair_name}: MSE_A={row.mse_a:.4f}, MSE_B={row.mse_b:.4f}, "
+                f"MSE_Convex@λ*={row.mse_convex_at_star:.4f}, reduction={reduction:.4f}"
+            )
+
+        if not per_pair_obs:
+            return "No baseline theory rows for any pair", "Not Evaluated"
+
+        obs = " | ".join(per_pair_obs)
+        verdict = "Supported" if any_supported else "Not Supported"
         return obs, verdict
 
     def _evaluate_h6_theory_accuracy(
@@ -370,12 +423,19 @@ class TableBuilder:
     ) -> Tuple[str, str]:
         if not theory_rows:
             return "Theory rows not computed", "Not Evaluated"
-        row = next((r for r in theory_rows if r.condition_name == "baseline"), None)
+        # Use RF+XGB baseline if available, else first baseline row
+        row = next(
+            (r for r in theory_rows
+             if r.condition_name == "baseline" and r.pair_name == "rf_xgb"),
+            None,
+        )
+        if row is None:
+            row = next((r for r in theory_rows if r.condition_name == "baseline"), None)
         if row is None:
             return "No baseline row", "Not Evaluated"
         diff = abs(row.lambda_star_convex_theory - row.lambda_star_convex_empirical)
         obs = (
-            f"λ*_theory={row.lambda_star_convex_theory:.4f}, "
+            f"pair={row.pair_name}, λ*_theory={row.lambda_star_convex_theory:.4f}, "
             f"λ*_empirical={row.lambda_star_convex_empirical:.4f}, "
             f"|diff|={diff:.4f}"
         )
@@ -384,16 +444,137 @@ class TableBuilder:
 
     def _evaluate_h7_convex_vs_prob(
         self,
-        hybrid_convex: Optional[Dict],
-        hybrid_prob:   Optional[Dict],
+        hybrid_pairs: Dict[str, Dict],
     ) -> Tuple[str, str]:
-        if hybrid_convex is None or hybrid_prob is None:
+        if not hybrid_pairs:
             return "Hybrid results not available", "Not Evaluated"
-        min_mse_convex = min(hr.mse for hr in hybrid_convex.values())
-        min_mse_prob   = min(hr.mse for hr in hybrid_prob.values())
-        obs = (
-            f"Min MSE convex={min_mse_convex:.4f}, "
-            f"Min MSE probabilistic={min_mse_prob:.4f}"
+
+        per_pair_obs = []
+        all_supported = True
+        any_evaluated = False
+        for pair_name, payload in hybrid_pairs.items():
+            convex = payload.get("convex")
+            prob   = payload.get("prob")
+            if not convex or not prob:
+                continue
+            any_evaluated = True
+            min_mse_convex = min(hr.mse for hr in convex.values())
+            min_mse_prob   = min(hr.mse for hr in prob.values())
+            gap = min_mse_prob - min_mse_convex
+            per_pair_obs.append(
+                f"{pair_name}: convex={min_mse_convex:.4f}, prob={min_mse_prob:.4f}, "
+                f"gap={gap:.4f}"
+            )
+            if min_mse_convex >= min_mse_prob:
+                all_supported = False
+
+        if not any_evaluated:
+            return "No hybrid pairs available", "Not Evaluated"
+
+        obs = " | ".join(per_pair_obs)
+        verdict = "Supported" if all_supported else "Not Supported"
+        return obs, verdict
+
+    # ── H8: Family diversity ──────────────────────────────────────────────
+
+    def _evaluate_h8_family_diversity(
+        self,
+        hybrid_pairs: Dict[str, Dict],
+    ) -> Tuple[str, str]:
+        """
+        Compare MSE reduction at λ* for the within-family pair (rf_xgb)
+        against the mean reduction across cross-family pairs (rf_svr, xgb_svr).
+        Reduction = MSE_better_parent − min_MSE_convex.
+        """
+        if not hybrid_pairs:
+            return "Hybrid results not available", "Not Evaluated"
+
+        def reduction(payload: Dict) -> Optional[float]:
+            convex = payload.get("convex")
+            stats  = payload.get("stats")
+            if not convex or not stats:
+                return None
+            min_mse_convex = min(hr.mse for hr in convex.values())
+            min_parent = min(stats["mse_a"], stats["mse_b"])
+            return min_parent - min_mse_convex
+
+        within = reduction(hybrid_pairs.get("rf_xgb", {})) if "rf_xgb" in hybrid_pairs else None
+        cross_reductions = []
+        for cp in ("rf_svr", "xgb_svr"):
+            r = reduction(hybrid_pairs.get(cp, {})) if cp in hybrid_pairs else None
+            if r is not None:
+                cross_reductions.append(r)
+
+        if within is None or not cross_reductions:
+            return "Need rf_xgb and at least one cross-family pair", "Not Evaluated"
+
+        cross_mean = float(np.mean(cross_reductions))
+        # ρ values for context
+        rho_within = hybrid_pairs.get("rf_xgb", {}).get("stats", {}).get("rho")
+        rho_cross  = [
+            hybrid_pairs.get(p, {}).get("stats", {}).get("rho")
+            for p in ("rf_svr", "xgb_svr") if p in hybrid_pairs
+        ]
+        rho_cross_mean = (
+            float(np.mean([r for r in rho_cross if r is not None]))
+            if rho_cross else None
         )
-        verdict = "Supported" if min_mse_convex < min_mse_prob else "Not Supported"
+
+        obs = (
+            f"reduction within(rf_xgb)={within:.4f} (ρ={rho_within:.3f}) | "
+            f"mean cross={cross_mean:.4f}"
+        )
+        if rho_cross_mean is not None:
+            obs += f" (mean ρ_cross={rho_cross_mean:.3f})"
+        verdict = "Supported" if cross_mean > within else "Not Supported"
+        return obs, verdict
+
+    # ── H9: Convex advantage amplification ────────────────────────────────
+
+    def _evaluate_h9_convex_amplification(
+        self,
+        hybrid_pairs: Dict[str, Dict],
+    ) -> Tuple[str, str]:
+        """
+        For each pair, compute:
+            convex_advantage = min_MSE_prob − min_MSE_convex
+            D_sq             = stats["bias_diff_sq"]   (= E[(μ_A − μ_B)²])
+
+        Verdict 'Supported' iff:
+          (a) the within-family pair (rf_xgb) has the SMALLEST convex_advantage,
+          (b) cross-family pairs have larger D² than within-family
+              (mechanism check).
+        """
+        if not hybrid_pairs:
+            return "Hybrid results not available", "Not Evaluated"
+
+        per_pair = {}
+        for pair_name, payload in hybrid_pairs.items():
+            convex = payload.get("convex")
+            prob   = payload.get("prob")
+            stats  = payload.get("stats", {})
+            if not convex or not prob or "bias_diff_sq" not in stats:
+                continue
+            min_mse_convex = min(hr.mse for hr in convex.values())
+            min_mse_prob   = min(hr.mse for hr in prob.values())
+            per_pair[pair_name] = {
+                "advantage": min_mse_prob - min_mse_convex,
+                "D_sq":       stats["bias_diff_sq"],
+            }
+
+        if "rf_xgb" not in per_pair or len(per_pair) < 2:
+            return "Need rf_xgb plus at least one other pair", "Not Evaluated"
+
+        within = per_pair["rf_xgb"]
+        cross  = {p: v for p, v in per_pair.items() if p != "rf_xgb"}
+
+        smallest_advantage = within["advantage"] <= min(v["advantage"] for v in cross.values())
+        d_sq_check = all(v["D_sq"] > within["D_sq"] for v in cross.values())
+
+        obs_parts = [
+            f"{p}: adv={v['advantage']:.4f}, D²={v['D_sq']:.4f}"
+            for p, v in per_pair.items()
+        ]
+        obs = " | ".join(obs_parts)
+        verdict = "Supported" if (smallest_advantage and d_sq_check) else "Not Supported"
         return obs, verdict

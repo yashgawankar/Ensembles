@@ -70,6 +70,12 @@ BASELINE_PARAMS = {
             "random_state": GLOBAL_SEED,
         },
     },
+    "svr": {
+        "kernel": "rbf",
+        "C": 1.0,
+        "epsilon": 0.1,
+        "gamma": "scale",
+    },
 }
 
 # ─────────────────────────────────────────────
@@ -130,13 +136,19 @@ COLORS = {
     "rf":         "#2563EB",   # blue
     "xgb":        "#DC2626",   # red
     "bagged_xgb": "#7C3AED",  # purple
+    "svr":        "#F59E0B",   # amber
     "convex":     "#059669",   # emerald
     "probabilistic": "#D97706", # amber
     "iso_contour": "#94A3B8",  # slate (dashed)
+    # Hybrid pair colours
+    "rf_xgb":     "#059669",   # emerald (matches existing convex colour)
+    "rf_svr":     "#7C3AED",   # violet
+    "xgb_svr":    "#D97706",   # amber
 }
 
 MODEL_LABELS = {
     "rf":         "Random Forest",
     "xgb":        "XGBoost",
     "bagged_xgb": "Bagged-XGB",
+    "svr":        "SVR (RBF)",
 }

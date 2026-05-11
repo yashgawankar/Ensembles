@@ -14,6 +14,7 @@ from typing import Any, Dict, List, Optional, Tuple
 import numpy as np
 from sklearn.base import BaseEstimator
 from sklearn.ensemble import BaggingRegressor, RandomForestRegressor
+from sklearn.svm import SVR
 
 try:
     from xgboost import XGBRegressor
@@ -192,8 +193,12 @@ class ModelBuilder:
             return ModelBuilder._build_xgb(config)
         elif model_type == "bagged_xgb":
             return ModelBuilder._build_bagged_xgb(config)
+        elif model_type == "svr":
+            return ModelBuilder._build_svr(config)
         else:
-            raise ValueError(f"Unknown model_type '{model_type}'. Choose: rf, xgb, bagged_xgb")
+            raise ValueError(
+                f"Unknown model_type '{model_type}'. Choose: rf, xgb, bagged_xgb, svr"
+            )
 
     @staticmethod
     def _build_rf(config: Dict) -> RandomForestRegressor:
@@ -223,6 +228,11 @@ class ModelBuilder:
             estimator=inner_estimator,
             **outer_cfg,
         )
+
+    @staticmethod
+    def _build_svr(config: Dict) -> SVR:
+        # No Pipeline wrapper — DataPreprocessor already StandardScales all data.
+        return SVR(**config)
 
     @staticmethod
     def build_from_baseline(model_type: str) -> BaseEstimator:

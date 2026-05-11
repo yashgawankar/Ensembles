@@ -39,19 +39,23 @@ class DataPreprocessor:
         self,
         data_generator: DataGenerator,
         test_size: int = 2_000,
+        val_size: int = 0,
         random_seed: int = 42,
         cache_dir: Optional[str] = None,
     ):
         self.data_generator = data_generator
         self.test_size = test_size
+        self.val_size = val_size
         self.random_seed = random_seed
         self.cache_dir = cache_dir
 
         # Lazy-loaded; populated on first call to get_train_test_split
         self._X_train_raw: Optional[np.ndarray] = None
         self._X_test_raw:  Optional[np.ndarray] = None
+        self._X_val_raw:   Optional[np.ndarray] = None
         self._y_train:     Optional[np.ndarray] = None
         self._y_test:      Optional[np.ndarray] = None
+        self._y_val:       Optional[np.ndarray] = None
         self._scaler:      Optional[StandardScaler] = None
 
         self._initialised = False
@@ -84,15 +88,32 @@ class DataPreprocessor:
             random_state=self.random_seed,
         )
 
-        # Fit scaler on TRAIN only
-        scaler = StandardScaler()
-        X_tr_scaled = scaler.fit_transform(X_tr_raw)
-        X_te_scaled = scaler.transform(X_te_raw)
+        # Optional validation split carved out of the training pool BEFORE scaling.
+        # Validation set uses a separate fixed seed so test set is unaffected.
+        if self.val_size and self.val_size > 0:
+            n_pool = len(y_tr)
+            val_frac = min(self.val_size / n_pool, 0.5)
+            X_pool_raw, X_val_raw, y_pool, y_val = train_test_split(
+                X_tr_raw, y_tr,
+                test_size=val_frac,
+                random_state=self.random_seed + 1,
+            )
+        else:
+            X_pool_raw, y_pool = X_tr_raw, y_tr
+            X_val_raw, y_val   = None, None
 
-        self._X_train_raw = X_tr_scaled   # "raw" but already scaled – term kept for clarity
+        # Fit scaler on TRAIN POOL only (not on val or test)
+        scaler = StandardScaler()
+        X_pool_scaled = scaler.fit_transform(X_pool_raw)
+        X_te_scaled   = scaler.transform(X_te_raw)
+        X_val_scaled  = scaler.transform(X_val_raw) if X_val_raw is not None else None
+
+        self._X_train_raw = X_pool_scaled   # "raw" but already scaled – term kept for clarity
         self._X_test_raw  = X_te_scaled
-        self._y_train     = y_tr
+        self._X_val_raw   = X_val_scaled
+        self._y_train     = y_pool
         self._y_test      = y_te
+        self._y_val       = y_val
         self._scaler      = scaler
 
         if self.cache_dir:
@@ -133,6 +154,21 @@ class DataPreprocessor:
         return self._y_test
 
     @property
+    def X_val(self) -> Optional[np.ndarray]:
+        self._ensure_init()
+        return self._X_val_raw
+
+    @property
+    def y_val(self) -> Optional[np.ndarray]:
+        self._ensure_init()
+        return self._y_val
+
+    @property
+    def has_val_split(self) -> bool:
+        self._ensure_init()
+        return self._X_val_raw is not None and len(self._X_val_raw) > 0
+
+    @property
     def scaler(self) -> StandardScaler:
         self._ensure_init()
         return self._scaler
@@ -145,11 +181,14 @@ class DataPreprocessor:
     def _save_to_cache(self):
         os.makedirs(self.cache_dir, exist_ok=True)
         payload = {
-            "X_train": self._X_train_raw,
-            "X_test":  self._X_test_raw,
-            "y_train": self._y_train,
-            "y_test":  self._y_test,
-            "scaler":  self._scaler,
+            "X_train":  self._X_train_raw,
+            "X_test":   self._X_test_raw,
+            "X_val":    self._X_val_raw,
+            "y_train":  self._y_train,
+            "y_test":   self._y_test,
+            "y_val":    self._y_val,
+            "scaler":   self._scaler,
+            "val_size": self.val_size,
         }
         with open(self._cache_path(), "wb") as f:
             pickle.dump(payload, f)
@@ -160,10 +199,16 @@ class DataPreprocessor:
             return False
         with open(path, "rb") as f:
             payload = pickle.load(f)
+        # Cache schema check: rebuild if the requested val_size differs from cache
+        cached_val = payload.get("val_size", 0)
+        if cached_val != self.val_size:
+            return False
         self._X_train_raw = payload["X_train"]
         self._X_test_raw  = payload["X_test"]
+        self._X_val_raw   = payload.get("X_val")
         self._y_train     = payload["y_train"]
         self._y_test      = payload["y_test"]
+        self._y_val       = payload.get("y_val")
         self._scaler      = payload["scaler"]
         return True
 

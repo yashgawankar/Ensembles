@@ -268,6 +268,131 @@ class HybridPlotter:
 
         return fig
 
+    # ── Plot 7: Correlation bar chart across pairs ────────────────────────
+
+    def plot_correlation_barchart(
+        self,
+        pair_rhos: Dict[str, float],
+        pair_labels: Optional[Dict[str, str]] = None,
+        save_path: Optional[str] = None,
+        title: str = "Plot 7 · Prediction Correlation (ρ) Across Hybrid Pairs",
+    ) -> plt.Figure:
+        """
+        Grouped bar chart: one bar per pair, coloured by COLORS[pair_name].
+        Each bar is annotated with its ρ value. A dashed reference line at
+        ρ=0.9 marks the typical within-family correlation.
+        """
+        try:
+            plt.style.use(self.style)
+        except Exception:
+            pass
+
+        fig, ax = plt.subplots(figsize=self.figsize, dpi=self.dpi)
+
+        pair_labels = pair_labels or {p: p for p in pair_rhos}
+        names  = list(pair_rhos.keys())
+        labels = [pair_labels.get(n, n) for n in names]
+        rhos   = [pair_rhos[n] for n in names]
+        colors = [COLORS.get(n, "#64748B") for n in names]
+
+        x = np.arange(len(names))
+        bars = ax.bar(x, rhos, color=colors, edgecolor="white", linewidth=1.2, zorder=3)
+
+        # Annotate each bar with its numeric ρ value
+        for rect, val in zip(bars, rhos):
+            ax.annotate(
+                f"{val:.3f}",
+                xy=(rect.get_x() + rect.get_width() / 2, rect.get_height()),
+                xytext=(0, 4),
+                textcoords="offset points",
+                ha="center", va="bottom",
+                fontsize=10, fontweight="bold",
+            )
+
+        # Reference line for typical within-family correlation
+        ax.axhline(
+            0.9, color="#94A3B8", linestyle="--", linewidth=1.0, alpha=0.8,
+            zorder=2, label="ρ = 0.9 (typical within-family)",
+        )
+
+        ax.set_xticks(x)
+        ax.set_xticklabels(labels, fontsize=10)
+        ax.set_ylabel("ρ(A, B)", fontsize=12, labelpad=8)
+        ax.set_title(title, fontsize=14, fontweight="bold", pad=14)
+
+        y_top = max(1.02, max(rhos) + 0.08)
+        y_bot = min(0.0, min(rhos) - 0.08)
+        ax.set_ylim(y_bot, y_top)
+        ax.legend(loc="lower right", fontsize=9, framealpha=0.92)
+
+        plt.tight_layout()
+
+        if save_path:
+            fig.savefig(save_path, bbox_inches="tight")
+
+        return fig
+
+    # ── Plot 8: Multi-pair MSE vs λ ───────────────────────────────────────
+
+    def plot_mse_vs_lambda_multipair(
+        self,
+        pairs_convex: Dict[str, Dict[float, HybridResult]],
+        pair_labels: Optional[Dict[str, str]] = None,
+        save_path: Optional[str] = None,
+        title: str = "Plot 8 · MSE vs λ — Convex Hybrid (All Pairs)",
+    ) -> plt.Figure:
+        """
+        One MSE-vs-λ line per hybrid pair (convex only). Empirical λ* for
+        each pair is marked with a vertical dashed line in the same colour.
+        """
+        try:
+            plt.style.use(self.style)
+        except Exception:
+            pass
+
+        fig, ax = plt.subplots(figsize=self.figsize, dpi=self.dpi)
+
+        pair_labels = pair_labels or {p: p for p in pairs_convex}
+
+        for pair_name, convex in pairs_convex.items():
+            if not convex:
+                continue
+            lambdas = sorted(convex.keys())
+            mses    = [convex[l].mse for l in lambdas]
+            color   = COLORS.get(pair_name, "#64748B")
+            label   = pair_labels.get(pair_name, pair_name)
+
+            ax.plot(
+                lambdas, mses,
+                color=color, linewidth=2.2,
+                label=label, zorder=3,
+            )
+
+            # Empirical λ* for this pair
+            lam_star = min(convex, key=lambda l: convex[l].mse)
+            ax.axvline(
+                lam_star, color=color,
+                linewidth=1.2, linestyle="--", alpha=0.6, zorder=2,
+            )
+            ax.scatter(
+                [lam_star], [convex[lam_star].mse],
+                s=100, color=color, marker="o",
+                edgecolors="white", linewidths=1, zorder=5,
+            )
+
+        ax.set_xlabel("λ  (0 = pure A, 1 = pure B)", fontsize=12, labelpad=8)
+        ax.set_ylabel("MSE (Bias² + Variance)", fontsize=12, labelpad=8)
+        ax.set_title(title, fontsize=14, fontweight="bold", pad=14)
+        ax.set_xlim(-0.03, 1.03)
+        ax.legend(loc="best", fontsize=9, framealpha=0.92)
+
+        plt.tight_layout()
+
+        if save_path:
+            fig.savefig(save_path, bbox_inches="tight")
+
+        return fig
+
     # ── Helpers ───────────────────────────────────────────────────────────
 
     def _draw_iso_contours(

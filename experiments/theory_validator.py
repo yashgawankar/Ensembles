@@ -224,43 +224,49 @@ class TheoryValidator:
     @staticmethod
     def build_validation_row(
         condition_name: str,
+        pair_name: str,
         stats: Dict,
         convex_results: Dict[float, "HybridResult"],
         prob_results: Dict[float, "HybridResult"],
     ) -> TheoryValidationRow:
         """
-        Build a complete TheoryValidationRow for one experimental condition.
+        Build a complete TheoryValidationRow for one experimental condition
+        and a specific (A, B) model pair.
 
         Parameters
         ----------
         condition_name : e.g. 'baseline', 'low_noise', ...
+        pair_name      : e.g. 'rf_xgb', 'rf_svr', 'xgb_svr'
         stats          : output of HybridComputationEngine.compute_all_statistics()
+                         Must contain: bias_a, var_a, bias_b, var_b, covariance,
+                         signed_bias_a, signed_bias_b, bias_diff_sq, rho, mse_a, mse_b.
         convex_results : output of HybridComputationEngine.compute_convex_hybrid()
         prob_results   : output of HybridComputationEngine.compute_probabilistic_hybrid()
         """
-        # Signed biases from mean predictions – approximate using sqrt
-        # (true sign would require per-point residuals; this is fine for report)
-        b_rf  = np.sqrt(stats["bias_rf"])
-        b_xgb = np.sqrt(stats["bias_xgb"])
+        # FIX: use TRUE signed biases (mean residual). Previous code used
+        # np.sqrt(bias_sq) which is always positive and lost sign information,
+        # causing the B0·Δb cross-term in λ* to skew the estimator.
+        b_a = stats["signed_bias_a"]
+        b_b = stats["signed_bias_b"]
 
         lam_star_convex_theory = TheoryValidator.derive_lambda_star_convex(
-            bias_sq_rf=stats["bias_rf"],
-            var_rf=stats["var_rf"],
-            bias_sq_xgb=stats["bias_xgb"],
-            var_xgb=stats["var_xgb"],
+            bias_sq_rf=stats["bias_a"],
+            var_rf=stats["var_a"],
+            bias_sq_xgb=stats["bias_b"],
+            var_xgb=stats["var_b"],
             covariance=stats["covariance"],
-            signed_bias_rf=b_rf,
-            signed_bias_xgb=b_xgb,
+            signed_bias_rf=b_a,
+            signed_bias_xgb=b_b,
         )
 
         lam_star_prob_theory = TheoryValidator.derive_lambda_star_probabilistic(
-            bias_sq_rf=stats["bias_rf"],
-            var_rf=stats["var_rf"],
-            bias_sq_xgb=stats["bias_xgb"],
-            var_xgb=stats["var_xgb"],
+            bias_sq_rf=stats["bias_a"],
+            var_rf=stats["var_a"],
+            bias_sq_xgb=stats["bias_b"],
+            var_xgb=stats["var_b"],
             bias_diff_sq=stats["bias_diff_sq"],
-            signed_bias_rf=b_rf,
-            signed_bias_xgb=b_xgb,
+            signed_bias_rf=b_a,
+            signed_bias_xgb=b_b,
         )
 
         lam_star_convex_emp = TheoryValidator.find_empirical_lambda_star(convex_results)
@@ -272,17 +278,19 @@ class TheoryValidator:
 
         return TheoryValidationRow(
             condition_name=condition_name,
-            bias_rf=stats["bias_rf"],
-            var_rf=stats["var_rf"],
-            bias_xgb=stats["bias_xgb"],
-            var_xgb=stats["var_xgb"],
+            pair_name=pair_name,
+            bias_a=stats["bias_a"],
+            var_a=stats["var_a"],
+            bias_b=stats["bias_b"],
+            var_b=stats["var_b"],
             covariance=stats["covariance"],
+            rho=stats["rho"],
             lambda_star_convex_theory=lam_star_convex_theory,
             lambda_star_convex_empirical=lam_star_convex_emp,
             lambda_star_prob_theory=lam_star_prob_theory,
             lambda_star_prob_empirical=lam_star_prob_emp,
-            mse_rf=stats["mse_rf"],
-            mse_xgb=stats["mse_xgb"],
+            mse_a=stats["mse_a"],
+            mse_b=stats["mse_b"],
             mse_convex_at_star=mse_convex_star,
             mse_prob_at_star=mse_prob_star,
         )

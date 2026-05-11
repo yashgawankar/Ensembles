@@ -104,6 +104,8 @@ class HybridResult:
 
     all_predictions: np.ndarray   # shape: (n_bootstrap, n_test)
 
+    pair_name: str = ""    # e.g. "rf_xgb", "rf_svr", "xgb_svr"
+
 
 # ─────────────────────────────────────────────
 # Theory validation row
@@ -112,12 +114,14 @@ class HybridResult:
 @dataclass
 class TheoryValidationRow:
     condition_name: str
+    pair_name: str          # e.g. "rf_xgb", "rf_svr", "xgb_svr"
 
-    bias_rf: float
-    var_rf: float
-    bias_xgb: float
-    var_xgb: float
+    bias_a: float
+    var_a: float
+    bias_b: float
+    var_b: float
     covariance: float
+    rho: float              # Pearson correlation of predictions
 
     lambda_star_convex_theory: float
     lambda_star_convex_empirical: float
@@ -125,8 +129,8 @@ class TheoryValidationRow:
     lambda_star_prob_theory: float
     lambda_star_prob_empirical: float
 
-    mse_rf: float
-    mse_xgb: float
+    mse_a: float
+    mse_b: float
     mse_convex_at_star: float
     mse_prob_at_star: float
 
