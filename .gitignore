@@ -1,1 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Virtual environment
+venv/
+env/
+.venv/
+
+# Heavy output artefacts — bootstrap predictions (50 runs x many configs)
+results_tuned/predictions/
+results_california_tuned/predictions/
+results/predictions/
+results_competitive/predictions/
+
+# Cache (reconstructible from re-running the pipeline)
+results_tuned/cache/
+results_california_tuned/cache/
+results/cache/
+results_competitive/cache/
+
+# Numpy arrays (generated outputs)
 *.npy
+
+# Zip artefacts
+*.zip
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Misc
+*.log
+*.tmp
