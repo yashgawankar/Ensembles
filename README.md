@@ -1,7 +1,7 @@
 # Beyond Error: Bias-Variance Analysis of Ensemble Methods
 
 **CSML Final Project** — Yash Gawankar  
-Report: [Beyond Error: Why Ensembles Work Until They Don't](https://github.com/yashgawankar/Ensembles)
+Report: [Beyond Error: Why Ensembles Work Until They Don't](./Final%20Project%20Report.pdf)
 
 ---
 
