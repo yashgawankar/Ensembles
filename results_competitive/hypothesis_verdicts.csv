@@ -1,8 +1,0 @@
-Hypothesis,Description,Prediction,Observed,Verdict
-H1,Trajectory divergence in Bias²-Variance space,"Bagging trajectory moves DOWN (variance↓, bias² stable). Boosting trajectory moves LEFT then UP (bias↓, variance↑).",rf: min MSE=5343.88 at 200 estimators | xgb: min MSE=965.42 at 200 estimators | bagged_xgb: min MSE=1917.44 at 200 estimators  [see Plot 1 for trajectory shapes],Visual Required
-H2,Boosting more sensitive to base learner depth than bagging,XGBoost MSE std across depth values > RF MSE std across depth values,No depth experiment found,Not Evaluated
-H3,Boosting benefits more from additional data,XGBoost MSE improvement from n=500→8000 > RF improvement,No train_size experiment found,Not Evaluated
-H4,Boosting degrades more under high noise,XGBoost variance increase under noise > RF variance increase,No noise experiment found,Not Evaluated
-H5,Optimal λ* achieves lower MSE than either parent model,"MSE(f_λ*) < min(MSE_RF, MSE_XGB)","MSE RF=5343.8777, MSE XGB=965.4238, MSE Convex@λ*=965.4238",Not Supported
-H6,Theoretical λ* matches empirical λ* within 0.1,|λ*_theory - λ*_empirical| ≤ 0.1 for convex hybrid,"λ*_theory=1.0000, λ*_empirical=1.0000, |diff|=0.0000",Supported
-H7,Convex hybrid achieves lower minimum MSE than probabilistic,min MSE(convex) < min MSE(probabilistic),"Min MSE convex=965.4238, Min MSE probabilistic=965.4238",Not Supported
